@@ -5,9 +5,10 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 #include "resultset.h"
 
-class RecordObject : public node::ObjectWrap {
+class RecordObject : public Nan::ObjectWrap {
 	public:
 		static void Init();
 		static v8::Handle<v8::Value> NewInstance(ResultSetObject * res, int index);

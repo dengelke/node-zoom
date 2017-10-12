@@ -5,8 +5,9 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 
-class ResultSetObject : public node::ObjectWrap {
+class ResultSetObject : public Nan::ObjectWrap {
 	public:
 		static void Init();
 		static v8::Handle<v8::Value> NewInstance(ZOOM_resultset result);

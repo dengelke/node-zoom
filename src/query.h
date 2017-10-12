@@ -5,8 +5,9 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 
-class QueryObject : public node::ObjectWrap {
+class QueryObject : public Nan::ObjectWrap {
 	public:
 		static void Init();
 		static v8::Handle<v8::Value> NewInstance(const v8::Arguments& args);

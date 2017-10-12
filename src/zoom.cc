@@ -2,6 +2,7 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 #include "connection.h"
 #include "scanset.h"
 #include "query.h"
@@ -25,13 +26,13 @@ void initAll(Handle<Object> target){
 
 	Handle<ObjectTemplate> Connection = ObjectTemplate::New();
 
-	Connection->Set(String::New("create"), FunctionTemplate::New(CreateConnection)->GetFunction());
+	Connection->Set(Nan::New("create").ToLocalChecked(), FunctionTemplate::New(CreateConnection)->GetFunction());
 
-	target->Set(String::NewSymbol("connection"), Connection->NewInstance());
-	target->Set(String::NewSymbol("query"), QueryObject::NewInstance());
-  target->Set(String::NewSymbol("scanset"), ScanSetObject::NewInstance());
-  target->Set(String::NewSymbol("resultset"), ResultSetObject::NewInstance());
-	target->Set(String::NewSymbol("record"), RecordObject::NewInstance());
+	target->Set(Nan::New("connection").ToLocalChecked(), Connection->NewInstance());
+	target->Set(Nan::New("query").ToLocalChecked(), QueryObject::NewInstance());
+  target->Set(Nan::New("scanset").ToLocalChecked(), ScanSetObject::NewInstance());
+  target->Set(Nan::New("resultset").ToLocalChecked(), ResultSetObject::NewInstance());
+	target->Set(Nan::New("record").ToLocalChecked(), RecordObject::NewInstance());
 }
 
 NODE_MODULE(zoom, initAll);
