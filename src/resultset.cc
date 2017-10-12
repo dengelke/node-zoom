@@ -54,7 +54,7 @@ Handle<Value> ResultSetObject::NewInstance(ZOOM_resultset result){
 	
 	Local<Object> instance = constructor->NewInstance();
 
-	ResultSetObject * obj = node::ObjectWrap::Unwrap<ResultSetObject>(instance);
+	ResultSetObject * obj = Nan::ObjectWrap::Unwrap<ResultSetObject>(instance);
 	
 	obj->rs = result;
 	
@@ -104,14 +104,14 @@ Handle<Value> ResultSetObject::option(const Arguments& args){
 
 Handle<Value> ResultSetObject::record(const Arguments& args){
 	HandleScope scope;
-	ResultSetObject * obj = node::ObjectWrap::Unwrap<ResultSetObject>(args.This());
+	ResultSetObject * obj = Nan::ObjectWrap::Unwrap<ResultSetObject>(args.This());
 	int index = args[0]->ToNumber()->Value();
 	return RecordObject::NewInstance(obj, index);
 }
 
 Handle<Value> ResultSetObject::records(const Arguments& args){
 	HandleScope scope;
-	ResultSetObject * obj = node::ObjectWrap::Unwrap<ResultSetObject>(args.This());
+	ResultSetObject * obj = Nan::ObjectWrap::Unwrap<ResultSetObject>(args.This());
 	size_t index = args[0]->ToNumber()->Value(), counts = args[1]->ToNumber()->Value();
 	ZOOM_record *recs = new ZOOM_record[counts];
 	Local<Array> array = Array::New(counts);
@@ -132,6 +132,6 @@ Handle<Value> ResultSetObject::records(const Arguments& args){
 
 Handle<Value> ResultSetObject::size(const Arguments& args){
 	HandleScope scope;
-	ResultSetObject * obj = node::ObjectWrap::Unwrap<ResultSetObject>(args.This());
+	ResultSetObject * obj = Nan::ObjectWrap::Unwrap<ResultSetObject>(args.This());
 	return scope.Close(Number::New(ZOOM_resultset_size(obj->rs)));
 }

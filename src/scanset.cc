@@ -39,7 +39,7 @@ Handle<Value> ScanSetObject::NewInstance(ZOOM_scanset scanset){
 	
 	Local<Object> instance = constructor->NewInstance();
 
-	ScanSetObject * obj = node::ObjectWrap::Unwrap<ScanSetObject>(instance);
+	ScanSetObject * obj = Nan::ObjectWrap::Unwrap<ScanSetObject>(instance);
 	
 	obj->scan = scanset;
 	
@@ -57,7 +57,7 @@ Handle<Value> ScanSetObject::NewInstance(){
 Handle<Value> ScanSetObject::term(const Arguments& args){
 	HandleScope scope;
 	
-	ScanSetObject * obj = node::ObjectWrap::Unwrap<ScanSetObject>(args.This());
+	ScanSetObject * obj = Nan::ObjectWrap::Unwrap<ScanSetObject>(args.This());
 	
 	const char * value_term;
 	size_t pos, *occ = 0, *len = 0;
@@ -71,7 +71,7 @@ Handle<Value> ScanSetObject::term(const Arguments& args){
 Handle<Value> ScanSetObject::displayTerm(const Arguments& args){
 	HandleScope scope;
 	
-	ScanSetObject * obj = node::ObjectWrap::Unwrap<ScanSetObject>(args.This());
+	ScanSetObject * obj = Nan::ObjectWrap::Unwrap<ScanSetObject>(args.This());
 	
 	const char * display_term;
 	size_t pos, *occ = 0, *len = 0;
@@ -85,13 +85,13 @@ Handle<Value> ScanSetObject::displayTerm(const Arguments& args){
 
 Handle<Value> ScanSetObject::size(const Arguments& args){
 	HandleScope scope;
-	ScanSetObject * obj = node::ObjectWrap::Unwrap<ScanSetObject>(args.This());
+	ScanSetObject * obj = Nan::ObjectWrap::Unwrap<ScanSetObject>(args.This());
 	return scope.Close(Number::New(ZOOM_scanset_size(obj->scan)));
 }
 
 Handle<Value> ScanSetObject::distory(const Arguments& args){
 	HandleScope scope;
-	ScanSetObject * obj = node::ObjectWrap::Unwrap<ScanSetObject>(args.This());
+	ScanSetObject * obj = Nan::ObjectWrap::Unwrap<ScanSetObject>(args.This());
 	ZOOM_scanset_destroy(obj->scan);
 	return args.This();
 }
@@ -99,7 +99,7 @@ Handle<Value> ScanSetObject::distory(const Arguments& args){
 Handle<Value> ScanSetObject::option(const Arguments& args){
 	HandleScope scope;
 	
-	ScanSetObject * obj = node::ObjectWrap::Unwrap<ScanSetObject>(args.This());
+	ScanSetObject * obj = Nan::ObjectWrap::Unwrap<ScanSetObject>(args.This());
 	
 	String::Utf8Value key(args[0]);
 	

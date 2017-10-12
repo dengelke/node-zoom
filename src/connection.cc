@@ -69,7 +69,7 @@ Handle<Value> ConnectionObject::NewInstance(const Arguments& args){
 	Handle<Value> argv[argc] = { args[0] };
 	Local<Object> instance = constructor->NewInstance(argc, argv);
 	
-	ConnectionObject * obj = node::ObjectWrap::Unwrap<ConnectionObject>(instance);
+	ConnectionObject * obj = Nan::ObjectWrap::Unwrap<ConnectionObject>(instance);
 
   ZOOM_options o = ZOOM_options_create();
   obj->conn = ZOOM_connection_create(o);
@@ -84,8 +84,8 @@ Handle<Value> ConnectionObject::NewInstance(const Arguments& args){
 Handle<Value> ConnectionObject::search(const Arguments& args){
 	HandleScope scope;
 	
-	ConnectionObject * obj = node::ObjectWrap::Unwrap<ConnectionObject>(args.This());
-	QueryObject * query = node::ObjectWrap::Unwrap<QueryObject>(args[0]->ToObject());
+	ConnectionObject * obj = Nan::ObjectWrap::Unwrap<ConnectionObject>(args.This());
+	QueryObject * query = Nan::ObjectWrap::Unwrap<QueryObject>(args[0]->ToObject());
 	ZOOM_resultset rs = ZOOM_connection_search(obj->conn, query->q);
 	Handle<Value> exception;
 
@@ -104,7 +104,7 @@ Handle<Value> ConnectionObject::connect(const Arguments& args){
 	int port = args[1]->ToNumber()->Value();
 	Handle<Value> exception;
 	
-	ConnectionObject * obj = node::ObjectWrap::Unwrap<ConnectionObject>(args.This());
+	ConnectionObject * obj = Nan::ObjectWrap::Unwrap<ConnectionObject>(args.This());
 
 	ZOOM_connection_connect(obj->conn, hostname, port);
 
@@ -118,7 +118,7 @@ Handle<Value> ConnectionObject::connect(const Arguments& args){
 Handle<Value> ConnectionObject::option(const Arguments& args){
 	HandleScope scope;
 	
-	ConnectionObject * obj = node::ObjectWrap::Unwrap<ConnectionObject>(args.This());
+	ConnectionObject * obj = Nan::ObjectWrap::Unwrap<ConnectionObject>(args.This());
 	
 	String::Utf8Value key(args[0]);
 	
@@ -147,7 +147,7 @@ Handle<Value> ConnectionObject::scan(const Arguments& args){
 	
 	String::Utf8Value str(args[0]);
 	const char * startterm = *str;
-	const ConnectionObject * obj = node::ObjectWrap::Unwrap<ConnectionObject>(args.This());
+	const ConnectionObject * obj = Nan::ObjectWrap::Unwrap<ConnectionObject>(args.This());
 	ZOOM_scanset ss = ZOOM_connection_scan(obj->conn, startterm);
 	Handle<Value> exception;
 
@@ -159,7 +159,7 @@ Handle<Value> ConnectionObject::scan(const Arguments& args){
 }
 
 Handle<Value> ConnectionObject::close(const Arguments& args){
-	const ConnectionObject * obj = node::ObjectWrap::Unwrap<ConnectionObject>(args.This());
+	const ConnectionObject * obj = Nan::ObjectWrap::Unwrap<ConnectionObject>(args.This());
 	ZOOM_connection_destroy(obj->conn);
 	return args.This();
 }

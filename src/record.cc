@@ -2,6 +2,7 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 #include <string>
 #include "connection.h"
 #include "record.h"
@@ -53,7 +54,7 @@ Handle<Value> RecordObject::NewInstance(ResultSetObject * res, int index){
 	
 	Local<Object> instance = constructor->NewInstance();
 
-	RecordObject * obj = node::ObjectWrap::Unwrap<RecordObject>(instance);
+	RecordObject * obj = Nan::ObjectWrap::Unwrap<RecordObject>(instance);
 	
   obj->r = ZOOM_resultset_record(res->rs, index);
 
@@ -75,7 +76,7 @@ Handle<Value> RecordObject::NewInstance(){
 Handle<Value> RecordObject::render(const Arguments& args){
 	HandleScope scope;
 	int len;
-	RecordObject * obj = node::ObjectWrap::Unwrap<RecordObject>(args.This());
+	RecordObject * obj = Nan::ObjectWrap::Unwrap<RecordObject>(args.This());
 	const char* data = ZOOM_record_get(obj->r, "render", &len);
 	return scope.Close(String::New(std::string(data, len).c_str()));
 }
@@ -83,7 +84,7 @@ Handle<Value> RecordObject::render(const Arguments& args){
 Handle<Value> RecordObject::rawdata(const Arguments& args){
 	HandleScope scope;
   int len;
-	RecordObject * obj = node::ObjectWrap::Unwrap<RecordObject>(args.This());
+	RecordObject * obj = Nan::ObjectWrap::Unwrap<RecordObject>(args.This());
   const char* data = ZOOM_record_get(obj->r, "raw", &len);
 	return scope.Close(String::New(std::string(data, len).c_str()));
 }
@@ -91,14 +92,14 @@ Handle<Value> RecordObject::rawdata(const Arguments& args){
 Handle<Value> RecordObject::xml(const Arguments& args){
 	HandleScope scope;
   int len;
-	RecordObject * obj = node::ObjectWrap::Unwrap<RecordObject>(args.This());
+	RecordObject * obj = Nan::ObjectWrap::Unwrap<RecordObject>(args.This());
   const char *data = ZOOM_record_get(obj->r, "xml", &len);
 	return scope.Close(String::New(data));
 }
 
 Handle<Value> RecordObject::recsyn(const Arguments& args){
 	HandleScope scope;
-	RecordObject * obj = node::ObjectWrap::Unwrap<RecordObject>(args.This());
+	RecordObject * obj = Nan::ObjectWrap::Unwrap<RecordObject>(args.This());
   const char *syn = ZOOM_record_get(obj->r, "syntax", 0);
 	return scope.Close(String::New(syn));
 }
@@ -106,7 +107,7 @@ Handle<Value> RecordObject::recsyn(const Arguments& args){
 Handle<Value> RecordObject::schema(const Arguments& args){
 	HandleScope scope;
   int len;
-	RecordObject * obj = node::ObjectWrap::Unwrap<RecordObject>(args.This());
+	RecordObject * obj = Nan::ObjectWrap::Unwrap<RecordObject>(args.This());
   const char *schema = ZOOM_record_get(obj->r, "schema", &len);
 	return scope.Close(String::New(std::string(schema, len).c_str()));
 }
@@ -114,7 +115,7 @@ Handle<Value> RecordObject::schema(const Arguments& args){
 Handle<Value> RecordObject::txml(const Arguments& args){
 	HandleScope scope;
   int len;
-	RecordObject * obj = node::ObjectWrap::Unwrap<RecordObject>(args.This());
+	RecordObject * obj = Nan::ObjectWrap::Unwrap<RecordObject>(args.This());
   const char *txml = ZOOM_record_get(obj->r, "txml", &len);
 	return scope.Close(String::New(std::string(txml, len).c_str()));
 }

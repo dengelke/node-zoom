@@ -57,7 +57,7 @@ Handle<Value> QueryObject::NewInstance(const Arguments& args){
 	
 	Local<Object> instance = constructor->NewInstance();
 
-	QueryObject * obj = node::ObjectWrap::Unwrap<QueryObject>(instance);
+	QueryObject * obj = Nan::ObjectWrap::Unwrap<QueryObject>(instance);
 	
 	obj->q = ZOOM_query_create();
 
@@ -74,7 +74,7 @@ Handle<Value> QueryObject::NewInstance(){
 
 Handle<Value> QueryObject::destroy(const Arguments& args){
 	HandleScope scope;
-	QueryObject * obj = node::ObjectWrap::Unwrap<QueryObject>(args.This());
+	QueryObject * obj = Nan::ObjectWrap::Unwrap<QueryObject>(args.This());
 	ZOOM_query_destroy(obj->q);
 	return args.This();
 }
@@ -85,7 +85,7 @@ Handle<Value> QueryObject::cql(const Arguments& args){
 	Handle<Value> exception;
 	String::Utf8Value str(args[0]);
 	Local<Object> instance = constructor->NewInstance();
-	QueryObject * obj = node::ObjectWrap::Unwrap<QueryObject>(instance);
+	QueryObject * obj = Nan::ObjectWrap::Unwrap<QueryObject>(instance);
 	
 	if(query_failed(ZOOM_query_cql(query, *str), *str, exception)){
 		return exception;
@@ -98,11 +98,11 @@ Handle<Value> QueryObject::cql(const Arguments& args){
 Handle<Value> QueryObject::cql2rpn(const Arguments& args){
 	HandleScope scope;
 	ZOOM_query query = ZOOM_query_create();
-	ConnectionObject * cobj = node::ObjectWrap::Unwrap<ConnectionObject>(args[1]->ToObject());
+	ConnectionObject * cobj = Nan::ObjectWrap::Unwrap<ConnectionObject>(args[1]->ToObject());
 	Handle<Value> exception;
 	String::Utf8Value str(args[0]);
 	Local<Object> instance = constructor->NewInstance();
-	QueryObject * obj = node::ObjectWrap::Unwrap<QueryObject>(instance);
+	QueryObject * obj = Nan::ObjectWrap::Unwrap<QueryObject>(instance);
 	
 	if(query_failed(ZOOM_query_cql2rpn(query, *str, cobj->conn), *str, exception)){
 		return exception;
@@ -118,7 +118,7 @@ Handle<Value> QueryObject::prefix(const Arguments& args){
 	Handle<Value> exception;
 	String::Utf8Value str(args[0]);
 	Local<Object> instance = constructor->NewInstance();
-	QueryObject * obj = node::ObjectWrap::Unwrap<QueryObject>(instance);
+	QueryObject * obj = Nan::ObjectWrap::Unwrap<QueryObject>(instance);
 	
 	if(query_failed(ZOOM_query_prefix(query, *str), *str, exception)){
 		return exception;
