@@ -2,6 +2,7 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 #include "scanset.h"
 #include "query.h"
 #include "resultset.h"
@@ -32,23 +33,23 @@ Persistent<Function> ConnectionObject::constructor;
 
 void ConnectionObject::Init(){
 	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-	tpl->SetClassName(String::NewSymbol("Connection"));
+	tpl->SetClassName(Nan::New("Connection").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("option"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("option").ToLocalChecked(), 
 			FunctionTemplate::New(option)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("search"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("search").ToLocalChecked(), 
 			FunctionTemplate::New(search)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("connect"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("connect").ToLocalChecked(), 
 			FunctionTemplate::New(connect)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("scan"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("scan").ToLocalChecked(), 
 			FunctionTemplate::New(scan)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("close"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("close").ToLocalChecked(), 
 			FunctionTemplate::New(close)->GetFunction());
 	
 	constructor = Persistent<Function>::New(tpl->GetFunction());

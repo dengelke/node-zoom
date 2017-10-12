@@ -16,26 +16,26 @@ Persistent<Function> RecordObject::constructor;
 
 void RecordObject::Init(){
 	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-	tpl->SetClassName(String::NewSymbol("ResultSet"));
+	tpl->SetClassName(Nan::New("ResultSet").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("render"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("render").ToLocalChecked(), 
 			FunctionTemplate::New(render)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("rawdata"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("rawdata").ToLocalChecked(), 
 			FunctionTemplate::New(rawdata)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("xml"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("xml").ToLocalChecked(), 
 			FunctionTemplate::New(xml)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("txml"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("txml").ToLocalChecked(), 
 			FunctionTemplate::New(txml)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("recsyn"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("recsyn").ToLocalChecked(), 
 			FunctionTemplate::New(recsyn)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("schema"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("schema").ToLocalChecked(), 
 			FunctionTemplate::New(schema)->GetFunction());
 	
 	constructor = Persistent<Function>::New(tpl->GetFunction());

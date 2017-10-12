@@ -2,6 +2,7 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 #include <string>
 #include "connection.h"
 #include "record.h"
@@ -16,26 +17,26 @@ Persistent<Function> ResultSetObject::constructor;
 
 void ResultSetObject::Init(){
 	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-	tpl->SetClassName(String::NewSymbol("ResultSet"));
+	tpl->SetClassName(Nan::New("ResultSet").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("destroy"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("destroy").ToLocalChecked(), 
 			FunctionTemplate::New(destroy)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("release"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("release").ToLocalChecked(), 
 			FunctionTemplate::New(destroy)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("option"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("option").ToLocalChecked(), 
 			FunctionTemplate::New(option)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("size"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("size").ToLocalChecked(), 
 			FunctionTemplate::New(size)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("records"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("records").ToLocalChecked(), 
 			FunctionTemplate::New(records)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("record"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("record").ToLocalChecked(), 
 			FunctionTemplate::New(record)->GetFunction());
 	
 	constructor = Persistent<Function>::New(tpl->GetFunction());

@@ -2,6 +2,7 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 #include "connection.h"
 #include "query.h"
 
@@ -9,7 +10,7 @@ using namespace v8;
 
 bool query_failed(int g, char * query, Handle<Value> exception){
 	if (g == -1){
-		exception = ThrowException(Exception::Error(String::New("Query Error")));
+		exception = ThrowException(Exception::Error(Nan::New("Query Error").ToLocalChecked()));
 		return true;
 	}
 	return false;
@@ -22,23 +23,23 @@ Persistent<Function> QueryObject::constructor;
 
 void QueryObject::Init(){
 	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-	tpl->SetClassName(String::NewSymbol("Query"));
+	tpl->SetClassName(Nan::New("Query").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("destroy"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("destroy").ToLocalChecked(), 
 			FunctionTemplate::New(destroy)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("cql"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("cql").ToLocalChecked(), 
 			FunctionTemplate::New(cql)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("cql2rpn"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("cql2rpn").ToLocalChecked(), 
 			FunctionTemplate::New(cql2rpn)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("prefix"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("prefix").ToLocalChecked(), 
 			FunctionTemplate::New(prefix)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("sortby"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("sortby").ToLocalChecked(), 
 			FunctionTemplate::New(sortby)->GetFunction());
 	
 	constructor = Persistent<Function>::New(tpl->GetFunction());

@@ -2,6 +2,7 @@ extern "C"{
 	#include <yaz/zoom.h>
 }
 #include <node.h>
+#include <nan.h>
 #include "scanset.h"
 
 using namespace v8;
@@ -13,14 +14,14 @@ Persistent<Function> ScanSetObject::constructor;
 
 void ScanSetObject::Init(){
 	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-	tpl->SetClassName(String::NewSymbol("ScanSet"));
+	tpl->SetClassName(Nan::New("ScanSet").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("size"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("size").ToLocalChecked(), 
 			FunctionTemplate::New(size)->GetFunction());
 	
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("term"), 
+	tpl->PrototypeTemplate()->Set(Nan::New("term").ToLocalChecked(), 
 			FunctionTemplate::New(term)->GetFunction());
 	
 	constructor = Persistent<Function>::New(tpl->GetFunction());
