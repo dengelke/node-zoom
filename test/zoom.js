@@ -15,7 +15,7 @@ before(function (done) {
 
 describe('connection', function () {
   describe('.search()', function () {
-    it('should run widthout error', function (done) {
+    it('should run without error', function (done) {
       var query = new zoom.Query('@attr 1=4 台灣');
       conn.search(query, function (err) {
         expect(err).to.be.null;
@@ -25,7 +25,7 @@ describe('connection', function () {
   });
 
   describe('.scan()', function () {
-    it('should run widthout error', function (done) {
+    it('should run without error', function (done) {
       var query = new zoom.Query('@attr 1=4 台灣');
       conn.scan(query, function (err) {
         expect(err).to.be.null;

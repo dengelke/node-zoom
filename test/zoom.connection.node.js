@@ -1,7 +1,7 @@
 'use strict';
 
 var expect = require('chai').expect;
-var zoom = require('../build/Release/zoom.node');
+var zoom = require('bindings')('zoom');
 
 describe('connection', function () {
 
